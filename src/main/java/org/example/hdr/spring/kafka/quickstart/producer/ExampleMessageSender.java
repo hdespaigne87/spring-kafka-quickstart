@@ -32,24 +32,4 @@ public class ExampleMessageSender {
             }
         });
     }
-
-    public void sendMessageToPartition(String topicName, int partition, String message) {
-
-        ListenableFuture<SendResult<String, String>> future =
-                kafkaTemplate.send(topicName, partition, null, message);
-
-        future.addCallback(new ListenableFutureCallback<>() {
-
-            @Override
-            public void onSuccess(SendResult<String, String> result) {
-                System.out.println("Sent message to partition=[" + message +
-                        "] with offset=[" + result.getRecordMetadata().offset() + "]");
-            }
-            @Override
-            public void onFailure(Throwable ex) {
-                System.out.println("Unable to send message to partition=["
-                        + message + "] due to : " + ex.getMessage());
-            }
-        });
-    }
 }
